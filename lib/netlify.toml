@@ -1,0 +1,11 @@
+[build]
+  command = "git clone https://github.com/flutter/flutter.git --depth 1 -b stable /tmp/flutter && export PATH=\"$PATH:/tmp/flutter/bin\" && flutter config --enable-web && flutter pub get && flutter build web --release --dart-define=SUPABASE_URL=\"$SUPABASE_URL\" --dart-define=SUPABASE_ANON_KEY=\"$SUPABASE_ANON_KEY\""
+  publish = "build/web"
+
+[build.environment]
+  SECRETS_SCAN_SMART_DETECTION_OMIT_VALUES = "AIza"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
