@@ -1,0 +1,36 @@
+name: Déployer sur GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.41.4'
+          channel: 'stable'
+
+      - name: Créer le fichier de config depuis les secrets
+        run: |
+          mkdir -p env
+          echo '{"SUPABASE_URL":"${{ secrets.SUPABASE_URL }}","SUPABASE_ANON_KEY":"${{ secrets.SUPABASE_ANON_KEY }}"}' > env/prod.json
+
+      - name: Installer les dépendances
+        run: flutter pub get
+
+      - name: Build web
+        run: flutter build web --release --dart-define-from-file=env/prod.json --base-href /orms/
+
+      - name: Déployer sur gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
