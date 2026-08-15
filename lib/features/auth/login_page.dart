@@ -67,7 +67,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   const Text(
                     'OFFICE ROOM MANAGEMENT SYSTEM',
                     textAlign: TextAlign.center,
-                    style: TextStyle(color: _kTexteClair, fontSize: 20, fontWeight: FontWeight.w800),
+                    style: TextStyle(color: _kTexteClair, fontSize: 18, fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(height: 40),
                   SizedBox(
